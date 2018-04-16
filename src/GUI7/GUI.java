@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 public class GUI  extends JFrame {
     //<-------------- screen resoultion-----------------------
@@ -37,7 +39,7 @@ public class GUI  extends JFrame {
 
 
     //<---------------------------checkbox------------------
-    private JCheckBox[] checked;
+    private  JCheckBox[] checked;
 
 
     //<-----------------textbox for offset && label && number of instructions --------------
@@ -45,6 +47,7 @@ public class GUI  extends JFrame {
     private JTextField[] offset;
     private JTextField[] label;
     private JTextField noOfInstructions=new JTextField("1");
+    private JTextField endOFinstructions=new JTextField("1");
     private JLabel[] lines;
 
     //<------------------buttons-----------------------
@@ -52,13 +55,24 @@ public class GUI  extends JFrame {
 
     private JButton Run=new JButton("Run");
     private JButton Graph =new JButton("Graph");
-    private JButton ok=new JButton(" + ");
+    private JButton ok=new JButton(" Generate ");
 
 
     //<----------------------------------- variables-----------------------
     private  int numberoflines=1;
     private static int noofline=0;
     private String nameoflabel;
+    private int endofinstruction=0;
+    private static int address;
+
+     private  JTextField saveroffset;
+    private  JLabel saverlines;
+    private JCheckBox saverchechked;
+    private  JTextField saverlabel;
+   private JComboBox saverInstructiontype;
+    private JComboBox saverrs;
+    private JComboBox saverrt;
+    private JComboBox saverrd;
 
 
 
@@ -121,6 +135,7 @@ public class GUI  extends JFrame {
 
         //<-------------------------Text field-----------------
         noOfInstructions.setBorder(BorderFactory.createTitledBorder("how many lines do you want ?:"));
+        endOFinstructions.setBorder(BorderFactory.createTitledBorder("Last Instruction :"));
 
 
 
@@ -129,19 +144,18 @@ public class GUI  extends JFrame {
 
 
         //<-------------------------Buttons--------------------
-        ok.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        numberoflines=Integer.parseInt(noOfInstructions.getText());
-                        morethaninstruction(numberoflines);
-                        numberoflines=0;
 
-                    }
-                }
+        morethaninstruction(numberoflines);
+       // collectingData(saverchechked,saverlabel,numberoflines);
 
 
-        );
+
+
+
+
+
+
+
 
 
 
@@ -153,12 +167,17 @@ public class GUI  extends JFrame {
         pnltop.add(Box.createRigidArea(new Dimension(60, 1)));
 
         pnltop.add(ok);
-        ok.setPreferredSize(new Dimension(100, 20));
+        pnltop.add(Box.createRigidArea(new Dimension(80, 1)));
+        ok.setPreferredSize(new Dimension(130, 20));
+        pnltop.add(endOFinstructions);
+
+        endOFinstructions.setPreferredSize(new Dimension(190,50));
 
 
 
 
-        morethaninstruction(numberoflines);
+
+
 
 
 
@@ -177,7 +196,6 @@ public class GUI  extends JFrame {
 
         pnlbotton.add(Graph);
         Graph.setPreferredSize(new Dimension(100, 20));
-
 
 
 
@@ -207,6 +225,14 @@ public class GUI  extends JFrame {
             rt=new JComboBox[n];
             rd =new JComboBox[n];
 
+
+
+
+
+
+
+
+
             nameoflabel=Integer.toString(noofline);
 
             offset[i]=new JTextField("0");
@@ -217,6 +243,20 @@ public class GUI  extends JFrame {
             rs[i]=new JComboBox(NumberOfRegisters_rs);
             rt[i]=new JComboBox(NumberOfRegisters_rt);
             rd[i]=new JComboBox(NumberOfRegisters_rd);
+
+//<------------------- saver-----------------
+
+            saveroffset=offset[i];
+            saverlines=lines[i];
+            saverchechked=checked[i];
+            saverlabel=label[i];
+            saverInstructiontype=InstructionType[i];
+            saverrs=rs[i];
+            saverrt=rt[i];
+            saverrd=rd[i];
+
+
+
             //<-----------------------comboboxes------------
 
             InstructionType[i].setBorder(BorderFactory.createTitledBorder("Instruction Type"));
@@ -231,7 +271,7 @@ public class GUI  extends JFrame {
 
 
             pnlmid.add(lines[i]);
-            lines[i].setPreferredSize(new Dimension(50,50));
+            lines[i].setPreferredSize(new Dimension(70,50));
             pnlmid.add(label[i]);
             label[i].setPreferredSize(new Dimension(100, 50));
             pnlmid.add(InstructionType[i]);
@@ -246,18 +286,104 @@ public class GUI  extends JFrame {
             pnlmid.add(rd[i]);
 
 
-            pnlmid.add(Box.createRigidArea(new Dimension(70,1)));
+            pnlmid.add(Box.createRigidArea(new Dimension(35,1)));
 
 
             pnlmid.add(checked[i]);
+            collectingData(saverchechked,saverlabel,saveroffset,saverInstructiontype,numberoflines);
 
+
+            //checkaddress(saverchechked,saverlabel,saverlines,n);
 
 
 
         }
-        this.repaint();
+
+
     }
 
+    public int checkaddress(JCheckBox checkBox,JTextField textField,JLabel label,int size){
+        for (int i = 0; i <size ; i++) {
+
+
+        address=Integer.parseInt(label.getText());
+
+        return address;
+        }
+
+        return 0;
+    }
+
+
+
+
+
+    public  void collectingData(JCheckBox checkBox, JTextField textFields,JTextField textoffset,JComboBox swORlw, int size){
+        ok.addActionListener(
+                new ActionListener(){
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        pnlmid.removeAll();
+                        pnlmid.revalidate();
+                        pnlmid.repaint();
+
+                        noofline=0;
+                        numberoflines=Integer.parseInt(noOfInstructions.getText());
+                        morethaninstruction(numberoflines);
+
+
+
+
+                    }
+                }
+        );
+
+       // System.out.println(address);
+        chechekandLABEL(checkBox,textFields);
+        offsetTrueOrNO(textoffset,swORlw);
+
+
+
+    }
+
+
+public void chechekandLABEL(JCheckBox checkBox, JTextField textFields){
+    checkBox.addItemListener(
+            new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent i) {
+                    if (i.getStateChange() == ItemEvent.SELECTED) {
+                        textFields.setEditable(false);
+                    } else if (i.getStateChange() == ItemEvent.DESELECTED) {
+                        textFields.setEditable(true);
+                    }
+                }
+            }
+
+    );
+
+
+
+}
+
+public void offsetTrueOrNO(JTextField textField1,JComboBox comboBox){
+        textField1.setEditable(false);
+        comboBox.addItemListener(
+                new ItemListener() {
+                    @Override
+                    public void itemStateChanged(ItemEvent itemEvent) {
+                        String nameofit = comboBox.getSelectedItem().toString();
+                        if(nameofit=="sw"||nameofit=="lw"){
+                            textField1.setEditable(true);
+                        }
+                        else {
+                            textField1.setEditable(false);
+                        }
+                    }
+                }
+        );
+
+}
 
 }
 
