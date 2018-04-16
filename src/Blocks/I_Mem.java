@@ -4,15 +4,11 @@ import java.util.HashMap;
 import java.util.StringTokenizer;
 import java.util.StringTokenizer.*;
 public class I_Mem {
-    public HashMap<Integer,String> instruction;
-    private StringTokenizer checker;
+    public static HashMap<Integer,String> instruction=new HashMap<Integer, String>();
+   // private StringTokenizer checker;
 //    String[] supportedInstructions = {"add", "addi", "beq", "j", "lw", "sw", "lb", "sb", "lbu", "sll", "nor", "jal", "jr", "slt", "slti"};
 
-    public I_Mem() {
 
-        instruction=new HashMap<Integer, String>();
-
-    }
 
 //    public boolean checkInstruction(String instruction) {
 //        this.checker = new StringTokenizer(instruction);
@@ -25,15 +21,15 @@ public class I_Mem {
 
 //        return false;
 //    }
-    public void addInstruction(String instruction,int address){
+    public static void  addInstruction(String ins,int address){
 
-            this.instruction.put(address,instruction);
+            instruction.put(address,ins);
 
 
 
     }
     //get the desired instruction only from the memory
-    public String getInstruction(int address){
-        return this.instruction.get(address);
+    public static String getInstruction(int address){
+        return instruction.get(address);
     }
 }

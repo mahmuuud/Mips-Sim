@@ -8,16 +8,17 @@ public class ReadInstruction {
     private int numberOfMemLocations;
     private int firstAddress;
     private int address;
-    private String memAddress;
+    private int memAddress;
     private int memValue;
     String regName;
-    int regNums;
+    int regNums=0;
     int regInitialValues;
     private I_Mem iMem;
     private RegisterFile reg;
     private Data_Mem mem;
 
     Scanner sc = new Scanner(System.in);
+    Scanner sc1 = new Scanner(System.in);
 
     public String getInstruction() {
         return this.ins;
@@ -30,7 +31,7 @@ public class ReadInstruction {
         numberOfMemLocations=sc.nextInt();
         for(int i=0;i<numberOfMemLocations;i++){
             System.out.println("enter the address of location number "+(i+1));
-            memAddress=sc.next();
+            memAddress=sc.nextInt();
             System.out.println("enter the value of address "+memAddress);
             memValue=sc.nextInt();
             mem.addLocation(memAddress,memValue);
@@ -50,16 +51,16 @@ public class ReadInstruction {
 
 
         }
-        System.out.println("What is the number of registers used by your program");
-        regNums=sc.nextInt();
-        for(int i=0;i<regNums;i++){
-            System.out.println("enter the name for Register number "+(i+1));
-            regName=sc.next();
-            System.out.println("enter the initial value of register number "+(i+1));
-            regInitialValues=sc.nextInt();
-            reg.setRegister(regName,regInitialValues);
-        }
-       
+        for(int i=0;i<32;i++) //initialize all registers with initial values null
+            RegisterFile.Register.put("$"+i,null);
+
+
+        RegisterFile.Register.put("$1",1);
+        RegisterFile.Register.put("$2",1000);
+        RegisterFile.Register.put("$3",1);
+        Execution e=new Execution();
+
+
     }
 
 

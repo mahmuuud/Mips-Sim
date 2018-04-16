@@ -48,6 +48,15 @@ public class ALU {
         return result;
     }
 
+    public int addi(int rs,int immediate){
+        return rs+immediate;
+    }
+
+    public int signExtend(short n){
+        int result=n;
+        return result;
+    }
+
 
 
 }

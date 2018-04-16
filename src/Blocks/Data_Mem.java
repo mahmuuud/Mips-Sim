@@ -3,17 +3,18 @@ package Blocks;
 import java.util.HashMap;
 
 public class Data_Mem {
-    private HashMap<String,Integer> memLocations;
+    public static HashMap<Integer,Integer> memLocations=new HashMap<Integer, Integer>();
 
-    public Data_Mem(){
-        memLocations=new HashMap<String, Integer>();
-    }
 
-    public void addLocation(String address,int value){
+    public static void addLocation(int address,int value){
         memLocations.put(address,value);
     }
 
-    public int getValue(String address){
+    public static int getValue(int address){
         return memLocations.get(address);
+    }
+
+    public static void printMem(){
+        System.out.println(memLocations);
     }
 }
