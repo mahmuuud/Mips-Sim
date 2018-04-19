@@ -9,9 +9,7 @@ public  class RegisterFile {
 
 
 
-    public static void printFile() {
-        System.out.println(Register);
-    }
+    public static void printFile() { System.out.println(Register); }
 
     public  void setRegister(String name, int value) {
         if (name == "$0") {

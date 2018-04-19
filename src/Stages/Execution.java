@@ -7,7 +7,8 @@ import java.util.StringTokenizer;
 public class Execution {
     private String instruction;
    //private StringTokenizer tokenizer;
-    private int rs;
+    private int rs_as_int;
+    private String rs_as_str;
     private int rt;
     private String rd;
     private RegisterFile reg;
@@ -29,77 +30,109 @@ public class Execution {
                 tokens=this.instruction.split(",");
                 Op=tokens[0];
                 if (Op.equals("add")) {
-                    rs = reg.getValue(tokens[2]);
-                    System.out.println(rs);
+                    rs_as_int = reg.getValue(tokens[2]);
+                    System.out.println(rs_as_int);
                     rt = reg.getValue(tokens[3]);
                     rd = tokens[1];
-                    reg.setRegister(rd, alu.add(rs, rt));
+                    reg.setRegister(rd, alu.add(rs_as_int, rt));
                 }
 
                 else if (Op.equals("addi")) {
                     tokens = this.instruction.split(",");
                     rd = tokens[1];
-                    rs = reg.getValue(tokens[2]);
+                    rs_as_int = reg.getValue(tokens[2]);
                     immediate = Integer.parseInt(tokens[3]);
-                    reg.setRegister(rd, alu.addi(rs, immediate));
+                    reg.setRegister(rd, alu.addi(rs_as_int, immediate));
                 }
 
                 else if(Op.equals("lw")){
                     //lw,$1,2($2)
-                    rd=tokens[1];
+                    rs_as_str=tokens[1];
                     String d=tokens[2]; //d=2($2)
                     String[]d1=d.split("()");
                     short offset=Short.parseShort(d1[0]); //offset=2 (as in our above eg)
                     int Soffset=alu.signExtend(offset); //sign extend the offset "has no meaning"
                     int address=reg.getValue(d1[2]+d1[3]); //get value of register $2 "d1[2]=$ , d1[3]=2"
                     address+=(4*Soffset);
-                    reg.setRegister(rd,Data_Mem.getValue(address));
+                    reg.setRegister(rs_as_str,Data_Mem.getValue(address));
 
                 }
 
                 else if(Op.equals("sw")){
                     //sw,$1,2($2)
-                    rs=reg.getValue(tokens[1]);
+                    rs_as_int=reg.getValue(tokens[1]);
                     String d=tokens[2];
                     String[] d1=d.split("()");
                     short offset=Short.parseShort(d1[0]);
                     int Soffset=alu.signExtend(offset);
                     int address=reg.getValue(d1[2]+d1[3]);
                     address+=(4*Soffset);
-                    Data_Mem.addLocation(address,rs);
+                    Data_Mem.addLocation(address,rs_as_int);
                 }
 
                 else if(Op.equals("lb")){
-
+                    //lb,$1,2($2)
+                    rs_as_str=tokens[1];
+                    String d = tokens[2];
+                    String[]d1 = d.split("()");
+                    rt = reg.getValue(d1[2]+d1[3]);
+                    short offset=Short.parseShort(d1[0]);
+                    int soffset = alu.signExtend(offset);
+                    int address=rt;
+                    address+=(1*soffset);
+                    reg.setRegister(rs_as_str,Data_Mem.getValue(address));
                 }
 
                 else if(Op.equals("lbu")){
-
+                    //lbu,$1,2($2)
+                    rs_as_str=tokens[1];
+                    String d = tokens[2];
+                    String[]d1 = d.split("()");
+                    rt=reg.getValue(d1[2]+d1[3]);
+                    short offset=Short.parseShort(d1[0]);
+                    int soffset = alu.signExtend(offset);
+                    int address=rt;
+                    address+=(1*soffset);
+                    reg.setRegister(rs_as_str,Data_Mem.getValue(address));
                 }
 
                 else if(Op.equals("sb")){
+                    //sb,$1,2($2)
+                    rs_as_int=reg.getValue(tokens[1]);
+                    String d=tokens[2];
+                    String[] d1=d.split("()");
+                    short offset=Short.parseShort(d1[0]);
+                    int Soffset=alu.signExtend(offset);
+                    int address=reg.getValue(d1[2]+d1[3]);
+                    address+=(1*Soffset);
+                    Data_Mem.addLocation(address,rs_as_int);
 
                 }
 
                 else if(Op.equals("sll")){
                     //sll,$1,$2,2
                     rd=tokens[1];
-                    rs=reg.getValue(tokens[2]);
-                    rs*=(2*Integer.parseInt(tokens[3]));
-                    reg.setRegister(rd,rs);
+                    rs_as_int=reg.getValue(tokens[2]);
+                    rs_as_int*=(2*Integer.parseInt(tokens[3]));
+                    reg.setRegister(rd,rs_as_int);
 
                 }
 
                 else if(Op.equals("nor")){
-
-                }
+                    //nor,$1,$2,$3
+                    rs_as_int = reg.getValue(tokens[2]);
+                    System.out.println(rs_as_int);
+                    rt = reg.getValue(tokens[3]);
+                    rd = tokens[1];
+                    reg.setRegister(rd, alu.nor(rs_as_int,rt));
+                    }
 
                 else if(Op.equals("slt")){
                     //slt,$1,$2,$3
                     rd=tokens[1];
-                    rs=reg.getValue(tokens[2]);
+                    rs_as_int=reg.getValue(tokens[2]);
                     rt=reg.getValue(tokens[3]);
-                    if(rs<rt)
+                    if(rs_as_int<rt)
                         reg.setRegister(rd,1);
                     else reg.setRegister(rd,0);
                 }
@@ -107,9 +140,9 @@ public class Execution {
                 else if(Op.equals("slti")){
                     //slti,$1,$2,3
                     rd=tokens[1];
-                    rs=reg.getValue(tokens[2]);
+                    rs_as_int=reg.getValue(tokens[2]);
                     int immediate=Integer.parseInt(tokens[3]);
-                    if(rs<immediate)
+                    if(rs_as_int<immediate)
                         reg.setRegister(rd,1);
                     else
                         reg.setRegister(rd,0);
