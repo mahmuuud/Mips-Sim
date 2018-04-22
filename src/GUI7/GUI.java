@@ -4,10 +4,9 @@ import sun.awt.image.ToolkitImage;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 public class GUI  extends JFrame {
     //<-------------- screen resoultion-----------------------
@@ -65,15 +64,18 @@ public class GUI  extends JFrame {
     private int endofinstruction=0;
     private static int address;
 
-     private  JTextField saveroffset;
+    private  JTextField saveroffset;
     private  JLabel saverlines;
     private JCheckBox saverchechked;
     private  JTextField saverlabel;
-   private JComboBox saverInstructiontype;
+    private JComboBox saverInstructiontype;
     private JComboBox saverrs;
     private JComboBox saverrt;
     private JComboBox saverrd;
 
+    private ArrayList<String> saverun=new ArrayList<String>();
+    ArrayList<String> saver2=new ArrayList<>();
+    ArrayList<String> result=new ArrayList<>();
 
 
 
@@ -83,9 +85,28 @@ public class GUI  extends JFrame {
 
         frontend();
 
+        Run.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                for (int i = 0; i <result.size() ; i++) {
+
+                    for (int j = 1; j <result.size(); j++) {
+
+                        if(result.get(i).toCharArray()[j-1]==':'){
+                            break;
+                        }
+
+                    }
+                }
+                System.out.println(result.toString());
+            }
+        });
+
+
+
     }
 
-    public void frontend(){
+    private void frontend(){
         //<--------------default--------------
 
         this.setTitle("Semi Colon ;");
@@ -93,9 +114,9 @@ public class GUI  extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //<-------------- screen resoultion-----------------------
 
-        Dimension screenResoultion = Toolkit.getDefaultToolkit().getScreenSize();
-        HeightDim=screenResoultion.height;
-        WidthDim=screenResoultion.width;
+
+        HeightDim=900;
+        WidthDim=1350;
         this.setResizable(false);
         this.setBounds(WidthDim/4,HeightDim/4,WidthDim/2+60,HeightDim/2+60);
 
@@ -145,9 +166,17 @@ public class GUI  extends JFrame {
 
         //<-------------------------Buttons--------------------
 
-        morethaninstruction(numberoflines);
-       // collectingData(saverchechked,saverlabel,numberoflines);
+        //morethaninstruction(numberoflines);
+        morethaninstruction(Integer.parseInt(noOfInstructions.getText()));
 
+
+        pnlmid.setPreferredSize(new Dimension(WidthDim/2+70,HeightDim/2+55*numberoflines));
+
+
+        //<----------------------add objects to the panel in order (pnlmid)-------------
+
+
+        //collectingData(saverchechked,saverlabel,saveroffset,saverInstructiontype,saverlines,saverrs,saverrt,saverrd,numberoflines);
 
 
 
@@ -176,15 +205,6 @@ public class GUI  extends JFrame {
 
 
 
-
-
-
-
-
-
-
-
-
         //<------------------- add objects to the panel in order (pnlbotton)-------------
 
 
@@ -206,14 +226,19 @@ public class GUI  extends JFrame {
 
     }
 
-    public void morethaninstruction(int n){
+    private void morethaninstruction(int n){
 
         pnlmid.setPreferredSize(new Dimension(WidthDim/2+70,HeightDim/2+55*n));
+
 
 
         //<----------------------add objects to the panel in order (pnlmid)-------------
 
         for (int i = 0; i < n; i++) {
+
+
+
+
             ++noofline;
             offset =new JTextField[n];
             lines=new JLabel[n];
@@ -224,13 +249,6 @@ public class GUI  extends JFrame {
             rs=new JComboBox[n];
             rt=new JComboBox[n];
             rd =new JComboBox[n];
-
-
-
-
-
-
-
 
 
             nameoflabel=Integer.toString(noofline);
@@ -254,6 +272,12 @@ public class GUI  extends JFrame {
             saverrs=rs[i];
             saverrt=rt[i];
             saverrd=rd[i];
+
+
+
+            // run(saverchechked,saverlabel,saveroffset,saverInstructiontype,saverlines,n);
+
+
 
 
 
@@ -290,35 +314,110 @@ public class GUI  extends JFrame {
 
 
             pnlmid.add(checked[i]);
-            collectingData(saverchechked,saverlabel,saveroffset,saverInstructiontype,numberoflines);
+
+            ok.addActionListener(
+                    new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent actionEvent) {
+                            result.clear();
+                            run(saverchechked,saverlabel,saveroffset,saverInstructiontype,saverlines,saverrs,saverrt,saverrd,n);
 
 
-            //checkaddress(saverchechked,saverlabel,saverlines,n);
+
+
+                        }
+                    }
+            );
+
+            collectingData(saverchechked,saverlabel,saveroffset,saverInstructiontype,saverlines,saverrs,saverrt,saverrd,numberoflines);
+
+
+
+
 
 
 
         }
+        // run(saverchechked,saverlabel,saveroffset,saverInstructiontype,saverlines,n);
+
+
+
 
 
     }
 
-    public int checkaddress(JCheckBox checkBox,JTextField textField,JLabel label,int size){
-        for (int i = 0; i <size ; i++) {
+    public void run(JCheckBox checkBox, JTextField textFields,JTextField textoffset,JComboBox swORlw,JLabel Numberline,JComboBox rs1,JComboBox rt1,JComboBox rd1, int size){
+        Run.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent actionEvent) {
+
+                        ArrayList<String> result2=new ArrayList<String>();
+
+                        for (int i = 0; i <size ; i++) {
+                            saverun.add(i, Numberline.getText()+":"+swORlw.getSelectedItem().toString()+ rs1.getSelectedItem().toString()+rt1.getSelectedItem().toString()+rd1.getSelectedItem().toString());
+                            saver2.add(i, saverun.get(i));
+                        }
+
+                        for (int i = 0; i <size ; i++) {
+
+                            result2.add(i,saver2.get(i));
+                            for (int j = 0; j < size; j++) {
+                                if(result2.get(i).toCharArray()[0]==saver2.get(j).toCharArray()[0]&& result2.indexOf(result2.get(i))==saver2.indexOf(saver2.get(j))){
+
+                                    continue;
+                                }
+                                else {
+                                    saver2.remove(j);
+                                }
+                            }
+
+                        }
 
 
-        address=Integer.parseInt(label.getText());
+                        result=removeDuplicates(saver2);
+                        //System.out.println(result.toString());
+                        //System.out.println(result.size());
 
-        return address;
+
+
+
+
+
+                    }
+                }
+        );
+
+
+
+    }
+
+
+    static ArrayList<String> removeDuplicates(ArrayList<String> list) {
+
+        // Store unique items in result.
+        ArrayList<String> result = new ArrayList<>();
+
+        // Record encountered Strings in HashSet.
+        HashSet<String> set = new HashSet<>();
+
+        // Loop over argument list.
+        for (String item : list) {
+
+            // If String is not in set, add it to the list and the set.
+            if (!set.contains(item)) {
+                result.add(item);
+                set.add(item);
+            }
         }
-
-        return 0;
+        return result;
     }
 
 
 
 
 
-    public  void collectingData(JCheckBox checkBox, JTextField textFields,JTextField textoffset,JComboBox swORlw, int size){
+    private   void collectingData(JCheckBox checkBox, JTextField textFields,JTextField textoffset,JComboBox swORlw,JLabel Numberline,JComboBox rs2,JComboBox rt2,JComboBox rd2, int size){
         ok.addActionListener(
                 new ActionListener(){
                     @Override
@@ -338,35 +437,45 @@ public class GUI  extends JFrame {
                 }
         );
 
-       // System.out.println(address);
+
         chechekandLABEL(checkBox,textFields);
         offsetTrueOrNO(textoffset,swORlw);
+
+        run(checkBox,textFields,textoffset,swORlw,Numberline,rs2,rt2,rd2,size);
+
+
+
+
+
 
 
 
     }
 
 
-public void chechekandLABEL(JCheckBox checkBox, JTextField textFields){
-    checkBox.addItemListener(
-            new ItemListener() {
-                @Override
-                public void itemStateChanged(ItemEvent i) {
-                    if (i.getStateChange() == ItemEvent.SELECTED) {
-                        textFields.setEditable(false);
-                    } else if (i.getStateChange() == ItemEvent.DESELECTED) {
-                        textFields.setEditable(true);
+    private void chechekandLABEL(JCheckBox checkBox, JTextField textFields){
+        checkBox.addItemListener(
+                new ItemListener() {
+                    @Override
+                    public void itemStateChanged(ItemEvent i) {
+                        if (i.getStateChange() == ItemEvent.SELECTED) {
+                            textFields.setEditable(false);
+                        } else if (i.getStateChange() == ItemEvent.DESELECTED) {
+                            textFields.setEditable(true);
+                        }
                     }
                 }
-            }
 
-    );
-
+        );
 
 
-}
 
-public void offsetTrueOrNO(JTextField textField1,JComboBox comboBox){
+
+
+
+    }
+
+    private void offsetTrueOrNO(JTextField textField1,JComboBox comboBox){
         textField1.setEditable(false);
         comboBox.addItemListener(
                 new ItemListener() {
@@ -383,7 +492,6 @@ public void offsetTrueOrNO(JTextField textField1,JComboBox comboBox){
                 }
         );
 
-}
+    }
 
 }
-

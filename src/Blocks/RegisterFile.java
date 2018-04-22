@@ -13,7 +13,7 @@ public  class RegisterFile {
 
     public  void setRegister(String name, int value) {
         if (name == "$0") {
-            System.out.println("Register zero cant be overwritten");
+            System.out.println("Register zero can't be overwritten.");
 
         }
         else{
