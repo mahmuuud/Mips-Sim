@@ -7,9 +7,10 @@ public class ReadInstruction {
     private int numberOfInstructions;
     private int numberOfMemLocations;
     private int firstAddress;
-    private int address;
+    private static int address;
     private int memAddress;
     private int memValue;
+    private int isFunction;
     String regName;
     int regNums=0;
     int regInitialValues;
@@ -37,10 +38,28 @@ public class ReadInstruction {
             mem.addLocation(memAddress,memValue);
         }
         System.out.println("enter the starting address of your program in memory");
-        firstAddress=sc.nextInt();
+        address=sc.nextInt();
+        System.out.println("Enter 1 if your program contains function and 0 otherwise.");
+        this.isFunction=sc.nextInt();
+        if(isFunction==1){
+            System.out.println("please enter the total number of instructions inside your functions");
+            this.numberOfInstructions=sc.nextInt();
+            address=firstAddress;
+            System.out.println("Instructions: ");
+            for(int i=0;i<numberOfInstructions;i++){
+                this.ins=sc.next();
+                iMem.addInstruction(ins,address); // instructions HashMap representing the actual instruction memory
+                I_Mem.functions.add(this.ins); //functions ArrayList; without addresses, while the index is the
+                //PC but not in a byte manner
+                address+=4;
+
+
+
+            }
+        }
+
         System.out.println("please enter the number of instructions");
         this.numberOfInstructions=sc.nextInt();
-        address=firstAddress;
         System.out.println("Instructions: ");
         for(int i=0;i<numberOfInstructions;i++){
                 this.ins=sc.next();
@@ -52,6 +71,9 @@ public class ReadInstruction {
 
 
         }
+
+
+
         RegisterFile.Register.put("$0",0);
         for(int i=1;i<32;i++) //initialize all registers except "$0" with initial values null
             RegisterFile.Register.put("$"+i,null);
@@ -61,6 +83,7 @@ public class ReadInstruction {
         RegisterFile.Register.put("$2",1000);
         RegisterFile.Register.put("$3",3);
         Execution e=new Execution();
+
 
 
     }

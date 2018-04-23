@@ -6,6 +6,7 @@ import java.util.StringTokenizer.*;
 public class I_Mem {
     public static HashMap<Integer,String> instruction=new HashMap<Integer, String>();
     public static ArrayList<String> instructions=new ArrayList<>(); //only to get a second storage of the instructions
+    public static ArrayList<String> functions=new ArrayList<>(); //ArrayList for the functions only
     public static void  addInstruction(String ins,int address){
 
             instruction.put(address,ins);
