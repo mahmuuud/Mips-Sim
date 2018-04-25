@@ -26,17 +26,7 @@ public class ReadInstruction {
     }
     public ReadInstruction(){
         iMem=new I_Mem();
-        mem=new Data_Mem();
         reg=new RegisterFile();
-        System.out.println("enter the number of used memory locations");
-        numberOfMemLocations=sc.nextInt();
-        for(int i=0;i<numberOfMemLocations;i++){
-            System.out.println("enter the address of location number "+(i+1));
-            memAddress=sc.nextInt();
-            System.out.println("enter the value of address "+memAddress);
-            memValue=sc.nextInt();
-            mem.addLocation(memAddress,memValue);
-        }
         System.out.println("enter the starting address of your program in memory");
         address=sc.nextInt();
         System.out.println("Enter 1 if your program contains function and 0 otherwise.");
