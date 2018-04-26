@@ -1,10 +1,10 @@
 package Blocks;
 
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public  class RegisterFile {
-    public static HashMap<String, Integer> Register= new HashMap<String, Integer>();
+    public static LinkedHashMap<String, Integer> Register= new LinkedHashMap<String, Integer>();
 
 
 
@@ -12,8 +12,8 @@ public  class RegisterFile {
     public static void printFile() { System.out.println(Register); }
 
     public  void setRegister(String name, int value) {
-        if (name == "$0") {
-            System.out.println("Register zero can't be overwritten.");
+        if (name.equals("$0")) {
+            System.err.println("Register zero can't be overwritten.");
 
         }
         else{

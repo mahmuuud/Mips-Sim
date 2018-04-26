@@ -19,7 +19,7 @@ public class Execution {
     private String Op;
     private HashMap<Integer, String> labeledInstructions;
     private HashMap<Integer,String> labeledInstructions2;
-    private int clockCycles;
+    public static int clockCycles;
 
     public Execution() {
         //load instruction from the memory

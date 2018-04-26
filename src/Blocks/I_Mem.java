@@ -1,10 +1,9 @@
 package Blocks;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.StringTokenizer;
-import java.util.StringTokenizer.*;
+import java.util.LinkedHashMap;
+
 public class I_Mem {
-    public static HashMap<Integer,String> instruction=new HashMap<Integer, String>();
+    public static LinkedHashMap<Integer,String> instruction=new LinkedHashMap<Integer, String>();
     public static ArrayList<String> instructions=new ArrayList<>(); //only to get a second storage of the instructions
     public static ArrayList<String> functions=new ArrayList<>(); //ArrayList for the functions only
     public static void  addInstruction(String ins,int address){

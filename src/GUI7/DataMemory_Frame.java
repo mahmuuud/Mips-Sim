@@ -92,8 +92,8 @@ public class DataMemory_Frame extends JFrame {
         next.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GUI Simulator =new GUI();
-                Simulator.setVisible(true);
+                FunctionCall f=new FunctionCall();
+                f.setVisible(true);
                 close();
                 for(int i=0;i<Integer.parseInt(numberOfLocations.getText());i++){
                     int a=Integer.parseInt(address[i].getText());

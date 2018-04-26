@@ -1,4 +1,7 @@
 package GUI7;
+import Blocks.I_Mem;
+import Blocks.RegisterFile;
+import Stages.Execution;
 import sun.awt.image.ToolkitImage;
 
 import javax.swing.*;
@@ -7,7 +10,7 @@ import java.awt.event.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
-public class GUI  extends JFrame {
+abstract public class GUI  extends JFrame {
     //<-------------- screen resoultion-----------------------
     private int HeightDim;
     private int WidthDim;
@@ -38,8 +41,8 @@ public class GUI  extends JFrame {
     private JLabel[] cus1;
     private JLabel[] cus2;
     //<------------------buttons-----------------------
-    private JButton Run=new JButton("Run");
-    private JButton Graph =new JButton("Graph");
+    private JButton Run=new JButton("Compile");
+    private JButton Graph =new JButton("Run");
     private JButton ok=new JButton(" Generate ");
     //<----------------------------------- variables-----------------------
     private  int numberoflines=1;
@@ -60,12 +63,25 @@ public class GUI  extends JFrame {
     private JLabel savercoma3;
     private JLabel savercus1;
     private JLabel savercus2;
+    protected JTextField memoryAddress=new JTextField("0");
+    protected ArrayList<String>a;
+    protected int Address=Integer.parseInt(memoryAddress.getText());
+    private JCheckBox isFunction=new JCheckBox("Function");
     private ArrayList<String> saverun=new ArrayList<String>();
      private ArrayList<String> saver2=new ArrayList<>();
     private ArrayList<String> result=new ArrayList<>();
      private ArrayList<String> finalresult=new ArrayList<>();
      private ArrayList<String> FINALRESULT =new ArrayList<>();
+    public abstract void saveInstructions();
     public GUI(){
+
+        Graph.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                saveInstructions();
+
+            }
+        });
 
         frontend();
 
@@ -110,9 +126,12 @@ public class GUI  extends JFrame {
         //<------------------- add objects to the panel in order (pnltop)-------------
         pnltop.add(noOfInstructions);
         noOfInstructions.setPreferredSize(new Dimension(235, 50));
-        pnltop.add(Box.createRigidArea(new Dimension(60, 1)));
+        pnltop.add(Box.createRigidArea(new Dimension(7, 1)));
         pnltop.add(ok);
         pnltop.add(Box.createRigidArea(new Dimension(80, 1)));
+        memoryAddress.setPreferredSize(new Dimension(170,50));
+        memoryAddress.setBorder(BorderFactory.createTitledBorder("Program Memory Address"));
+        pnltop.add(memoryAddress);
         ok.setPreferredSize(new Dimension(130, 20));
         //<------------------- add objects to the panel in order (pnlbotton)-------------
         pnlbotton.add(Run);
@@ -629,7 +648,10 @@ public class GUI  extends JFrame {
             saver69=String.copyValueOf(mychar);
             finalresult.add(i,saver69);
         }
-        System.out.println(finalresult.toString());
+        this.a=new ArrayList<>(finalresult);
+        System.out.println(a);
+
+        //System.out.println(finalresult.toString());
 return finalresult;
     }
     public ArrayList<String> GetArraylist(){
