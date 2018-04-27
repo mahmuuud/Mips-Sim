@@ -12,6 +12,7 @@ import java.awt.*;
 public class OutputScreen extends JFrame {
     private JTextPane screen;
     private SimpleAttributeSet attributeSet;
+    private JScrollPane scrollPane;
 
     public OutputScreen(){
         screen=new JTextPane();
@@ -27,11 +28,13 @@ public class OutputScreen extends JFrame {
         screen.setCharacterAttributes(attributeSet,true);
         screen.setForeground(new Color(0,255,255));
         screen.setText("Data Memory:"+"\n"+Data_Mem.memLocations.toString()+"\n"
-                        +"================================================"
+                        +"================================================"+"\n"
         +"Register File: "+"\n"+RegisterFile.Register.toString()+"\n"
                 +"================================================"+"\n"+
-        "Clock Cycles Spanned = "+Execution.clockCycles+" Cycles");
-        this.add(screen);
+        "Clock Cycles Spanned = "+Execution.clockCycles+" Cycles"+"\n");
+        scrollPane=new JScrollPane(screen,ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        this.add(scrollPane);
 
     }
 }

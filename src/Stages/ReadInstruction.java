@@ -52,11 +52,11 @@ public class ReadInstruction {
         this.numberOfInstructions=sc.nextInt();
         System.out.println("Instructions: ");
         for(int i=0;i<numberOfInstructions;i++){
-                this.ins=sc.next();
-                iMem.addInstruction(ins,address); // instructions HashMap representing the actual instruction memory
-                I_Mem.instructions.add(this.ins); //instructions ArrayList; without addresses, while the index is the
-                                                    //PC but not in a byte manner
-                address+=4;
+            this.ins=sc.next();
+            iMem.addInstruction(ins,address); // instructions HashMap representing the actual instruction memory
+            I_Mem.instructions.add(this.ins); //instructions ArrayList; without addresses, while the index is the
+            //PC but not in a byte manner
+            address+=4;
 
 
 
