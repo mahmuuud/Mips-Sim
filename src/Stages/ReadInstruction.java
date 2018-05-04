@@ -63,15 +63,33 @@ public class ReadInstruction {
         }
 
 
-
+        //Register file initialization
         RegisterFile.Register.put("$0",0);
-        for(int i=1;i<32;i++) //initialize all registers except "$0" with initial values null
-            RegisterFile.Register.put("$"+i,null);
-
-
-        RegisterFile.Register.put("$1",3);
-        RegisterFile.Register.put("$2",1000);
-        RegisterFile.Register.put("$3",3);
+        RegisterFile.Register.put("$at",null);
+        RegisterFile.Register.put("$v0",null);
+        RegisterFile.Register.put("$v1",null);
+        RegisterFile.Register.put("$a0",null);
+        RegisterFile.Register.put("$a1",null);
+        RegisterFile.Register.put("$a2",null);
+        RegisterFile.Register.put("$a3",null);
+        RegisterFile.Register.put("$t0",null);
+        RegisterFile.Register.put("$t1",null);
+        RegisterFile.Register.put("$t2",null);
+        RegisterFile.Register.put("$t3",null);
+        RegisterFile.Register.put("$t4",null);
+        RegisterFile.Register.put("$t5",null);
+        RegisterFile.Register.put("$t6",null);
+        RegisterFile.Register.put("$t7",null);
+        RegisterFile.Register.put("$t8",null);
+        RegisterFile.Register.put("$t9",null);
+        RegisterFile.Register.put("$s0",1);
+        RegisterFile.Register.put("$s1",null);
+        RegisterFile.Register.put("$s2",null);
+        RegisterFile.Register.put("$s3",null);
+        RegisterFile.Register.put("$s4",null);
+        RegisterFile.Register.put("$s5",null);
+        RegisterFile.Register.put("$s6",null);
+        RegisterFile.Register.put("$s7",null);
         Execution e=new Execution();
 
 

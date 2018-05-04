@@ -57,6 +57,7 @@ public class Execution {
             }
 
             if (Op.equals("add")) {
+                //add,$s2,$s3,$s4
                 rs = reg.getValue(tokens[2]);
                 System.out.println(rs);
                 rt = reg.getValue(tokens[3]);
@@ -76,7 +77,7 @@ public class Execution {
                 String[] d1 = d.split("()");
                 short offset = Short.parseShort(d1[0]); //offset=2 (as in our above eg)
                 int Soffset = alu.signExtend(offset); //sign extend the offset "has no meaning"
-                int address = reg.getValue(d1[2] + d1[3]); //get value of register $2 "d1[2]=$ , d1[3]=2"
+                int address = reg.getValue(d1[2] + d1[3] + d1[4]); //get value of register $2 "d1[2]=$ , d1[3]=2"
                 address += (4 * Soffset);
                 reg.setRegister(rd, Data_Mem.getValue(address));
 
@@ -87,7 +88,7 @@ public class Execution {
                 String[] d1 = d.split("()");
                 short offset = Short.parseShort(d1[0]);
                 int Soffset = alu.signExtend(offset);
-                int address = reg.getValue(d1[2] + d1[3]);
+                int address = reg.getValue(d1[2] + d1[3] + d1[4]);
                 address += (4 * Soffset);
                 Data_Mem.addLocation(address, rs);
             } else if (Op.equals("lb")) {
@@ -97,7 +98,7 @@ public class Execution {
                 String[] d1 = d.split("()");
                 short offset = Short.parseShort(d1[0]); //offset=2 (as in our above eg)
                 int Soffset = alu.signExtend(offset); //sign extend the offset "has no meaning"
-                int address = reg.getValue(d1[2] + d1[3]); //get value of register $2 "d1[2]=$ , d1[3]=2"
+                int address = reg.getValue(d1[2] + d1[3] + d1[4]); //get value of register $2 "d1[2]=$ , d1[3]=2"
                 address += (1 * Soffset);
                 reg.setRegister(rd, Data_Mem.getValue(address));
             } else if (Op.equals("lbu")) {
@@ -107,7 +108,7 @@ public class Execution {
                 String[] d1 = d.split("()");
                 short offset = Short.parseShort(d1[0]); //offset=2 (as in our above eg)
                 int Soffset = alu.signExtend(offset); //sign extend the offset "has no meaning"
-                int address = reg.getValue(d1[2] + d1[3]); //get value of register $2 "d1[2]=$ , d1[3]=2"
+                int address = reg.getValue(d1[2] + d1[3] + d1[4]); //get value of register $2 "d1[2]=$ , d1[3]=2"
                 address += (4 * Soffset);
                 reg.setRegister(rd, java.lang.Math.abs(Data_Mem.getValue(address)));
             } else if (Op.equals("sb")) {
@@ -117,7 +118,7 @@ public class Execution {
                 String[] d1 = d.split("()");
                 short offset = Short.parseShort(d1[0]);
                 int Soffset = alu.signExtend(offset);
-                int address = reg.getValue(d1[2] + d1[3]);
+                int address = reg.getValue(d1[2] + d1[3] + d1[4]);
                 address += (1 * Soffset);
                 Data_Mem.addLocation(address, rs);
 
@@ -265,7 +266,7 @@ public class Execution {
                         String[] d1 = d.split("()");
                         short offset = Short.parseShort(d1[0]); //offset=2 (as in our above eg)
                         int Soffset = alu.signExtend(offset); //sign extend the offset "has no meaning"
-                        int address = reg.getValue(d1[2] + d1[3]); //get value of register $2 "d1[2]=$ , d1[3]=2"
+                        int address = reg.getValue(d1[2] + d1[3] + d1[4]); //get value of register $2 "d1[2]=$ , d1[3]=2"
                         address += (4 * Soffset);
                         reg.setRegister(rd, Data_Mem.getValue(address));
 
@@ -276,7 +277,7 @@ public class Execution {
                         String[] d1 = d.split("()");
                         short offset = Short.parseShort(d1[0]);
                         int Soffset = alu.signExtend(offset);
-                        int address = reg.getValue(d1[2] + d1[3]);
+                        int address = reg.getValue(d1[2] + d1[3] + d1[4]);
                         address += (4 * Soffset);
                         Data_Mem.addLocation(address, rs);
                     } else if (Op.equals("lb")) {
@@ -286,7 +287,7 @@ public class Execution {
                         String[] d1 = d.split("()");
                         short offset = Short.parseShort(d1[0]); //offset=2 (as in our above eg)
                         int Soffset = alu.signExtend(offset); //sign extend the offset "has no meaning"
-                        int address = reg.getValue(d1[2] + d1[3]); //get value of register $2 "d1[2]=$ , d1[3]=2"
+                        int address = reg.getValue(d1[2] + d1[3] + d1[4]);; //get value of register $2 "d1[2]=$ , d1[3]=2"
                         address += (1 * Soffset);
                         reg.setRegister(rd, Data_Mem.getValue(address));
                     } else if (Op.equals("lbu")) {
@@ -296,7 +297,7 @@ public class Execution {
                         String[] d1 = d.split("()");
                         short offset = Short.parseShort(d1[0]); //offset=2 (as in our above eg)
                         int Soffset = alu.signExtend(offset); //sign extend the offset "has no meaning"
-                        int address = reg.getValue(d1[2] + d1[3]); //get value of register $2 "d1[2]=$ , d1[3]=2"
+                        int address = reg.getValue(d1[2] + d1[3] + d1[4]); //get value of register $2 "d1[2]=$ , d1[3]=2"
                         address += (4 * Soffset);
                         reg.setRegister(rd, java.lang.Math.abs(Data_Mem.getValue(address)));
                     } else if (Op.equals("sb")) {
@@ -306,7 +307,7 @@ public class Execution {
                         String[] d1 = d.split("()");
                         short offset = Short.parseShort(d1[0]);
                         int Soffset = alu.signExtend(offset);
-                        int address = reg.getValue(d1[2] + d1[3]);
+                        int address = reg.getValue(d1[2] + d1[3] + d1[4]);
                         address += (1 * Soffset);
                         Data_Mem.addLocation(address, rs);
 
