@@ -2,7 +2,7 @@ package GUI7;
 
 import Blocks.Data_Mem;
 import Blocks.RegisterFile;
-import Stages.Execution;
+import Stages.Execute;
 
 import javax.swing.*;
 import javax.swing.text.SimpleAttributeSet;
@@ -31,7 +31,7 @@ public class OutputScreen extends JFrame {
                         +"================================================"+"\n"
         +"Register File: "+"\n"+RegisterFile.Register.toString()+"\n"
                 +"================================================"+"\n"+
-        "Clock Cycles Spanned = "+Execution.clockCycles+" Cycles"+"\n");
+        "Clock Cycles Spanned = "+Execute.clockCycles+" Cycles"+"\n");
         scrollPane=new JScrollPane(screen,ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         this.add(scrollPane);

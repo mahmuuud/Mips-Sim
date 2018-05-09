@@ -7,7 +7,7 @@ public class Data_Mem {
 
 
     public static void addLocation(int address,int value){
-        memLocations.put(address,value);
+        memLocations.put((address),value);
     }
 
     public static int getValue(int address){

@@ -16,13 +16,9 @@ public class MainProgram extends GUI {
         }
 
 
-        RegisterFile.Register.put("$0",0);
-        for(int i=1;i<32;i++) //initialize all registers except "$0" with initial values null
-            RegisterFile.Register.put("$"+i,null);
-        RegisterFile.Register.put("$1",3);
-        RegisterFile.Register.put("$2",1000);
-        RegisterFile.Register.put("$3",3);
-        Execution execution=new Execution();
+        RegisterFile.initializeFile();
+        Execute e=new Execute();
+        e.Execute(I_Mem.instructions,0);
         OutputScreen o=new OutputScreen();
         o.setVisible(true);
         close();

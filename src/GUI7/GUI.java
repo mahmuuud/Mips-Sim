@@ -1,13 +1,8 @@
 package GUI7;
-import Blocks.I_Mem;
-import Blocks.RegisterFile;
-import Stages.Execution;
-import sun.awt.image.ToolkitImage;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 abstract public class GUI  extends JFrame {
